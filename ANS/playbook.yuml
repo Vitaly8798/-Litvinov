@@ -1,0 +1,30 @@
+---
+- hosts: [host]
+  become: true
+  become_method: sudo
+
+  tasks:
+    - name: "Udate and Upgrade"
+      apt:
+        upgrade: dist
+        force_apt_get: true
+    - name: "Install curl"
+      apt: 
+        name: curl
+        state: latest
+    - name: "Install Docker"
+      apt:
+        name: docker
+        state: latest
+    - name: "Restart ssh"
+      service:
+        name: sshd
+        state: restarted
+    - name: "Restart ufw"
+      service:
+        name: ufw
+        state: restarted
+    - name: "create /skillcloud-nginx"
+      file:
+        path: /skilcloud-nginx
+        state: directory
