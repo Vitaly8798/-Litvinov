@@ -59,4 +59,4 @@
         port: "8080"
         proto: tcp
     - name: "reboot"
-      reboot:
+        reboot:
