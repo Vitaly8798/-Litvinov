@@ -36,8 +36,8 @@
     - name: "copy index"
       copy: src=/root/wsr-skillcloud/index.html dest=/root mode=0777
 
-    - name: "copy nginx"    
-      copy: src= /root/wsr-skillcloud/nginx.conf dest=/root mode-0777
+#    - name: "copy nginx"    
+#      copy: src= /root/wsr-skillcloud/nginx.conf dest=/root mode-0777
 
     - name: "copy docker-compose"
       copy: src=/root/wsr-skillcloud/docker-compose.sh dest=/etc mode=0777
