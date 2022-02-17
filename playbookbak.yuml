@@ -1,0 +1,62 @@
+---
+- hosts: [host]
+  become: true
+  become_method: sudo
+
+  tasks:
+    - name: "Udate and Upgrade"
+      apt:
+        upgrade: dist
+        force_apt_get: true
+    - name: "Install curl"
+      apt: 
+        name: curl
+        state: latest
+    - name: "Install Docker"
+      apt:
+        name: docker
+        state: latest
+    - name: "Restart ssh"
+      service:
+        name: sshd
+        state: restarted
+    - name: "Restart ufw"
+      service:
+        name: ufw
+        state: restarted
+    - name: "create /skillcloud-nginx"
+      file:
+        path: /skilcloud-nginx
+        state: directory
+    - name: "WSR"
+      file: 
+        path: /root/skillcloud-nginx
+        state: directory
+
+    - name: "copy index"
+      copy: src=/root/wsr-skillcloud/index.html dest=/root mode=0777
+
+    - name: "copy nginx"    
+      copy: src= /root/wsr-skillcloud/nginx.conf dest=/root mode-0777
+
+    - name: "copy docker-compose"
+      copy: src=/root/wsr-skillcloud/docker-compose.sh dest=/etc mode=0777
+
+    - name: "run docker"
+      command: sh /root/docker-compose.sh
+
+    - name: "reboot"
+      reboot:
+
+    - name: "enable ufw "
+      service:
+        name: ufw
+        state: started
+
+    - name: "Port 80,8080,1834"
+      ufw:
+        rule: allow
+        port: "1834"
+        port: "80"
+        port: "8080"
+        proto: tcp
