@@ -32,7 +32,8 @@
       file: 
         path: /root/skillcloud-nginx
         state: directory
-
+    - name: "reboot"
+        reboot:
     - name: "copy index"
       copy: src=/root/wsr-skillcloud/index.html dest=/root mode=0777
 
@@ -44,9 +45,6 @@
 
     - name: "run docker"
       command: sh /root/docker-compose.sh
-
-    - name: "reboot"
-      reboot:
 
     - name: "enable ufw "
       service:
@@ -60,3 +58,5 @@
         port: "80"
         port: "8080"
         proto: tcp
+    - name: "reboot"
+      reboot:
